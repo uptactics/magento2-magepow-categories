@@ -1,5 +1,5 @@
 {
-    "name": "hyva-theme/magento2-magepow-categories",
+    "name": "hyva-themes/magento2-magepow-categories",
     "version": "1.0.0",
     "description": "Hyvä Themes Compatibility module for magepow/categories https://github.com/magepow/magento-2-categories",
     "type": "magento2-module",
@@ -11,10 +11,10 @@
     "license": "see LICENSE.md",
     "autoload": {
         "files": [
-            "registration.php"
+            "src/registration.php"
         ],
         "psr-4": {
-            "HyvaTheme\\Magento2MagepowCategories\\": "src/"
+            "HyvaThemes\\Magento2MagepowCategories\\": "src/"
         }
     },
     "authors": [
