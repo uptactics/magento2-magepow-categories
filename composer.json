@@ -1,0 +1,26 @@
+{
+    "name": "hyva-theme/magento2-magepow-categories",
+    "version": "1.0.0",
+    "description": "Hyvä Themes Compatibility module for magepow/categories https://github.com/magepow/magento-2-categories",
+    "type": "magento2-module",
+    "require": {
+        "magento/framework": "*",
+        "magepow/categories": "*",
+        "hyva-themes/magento2-compat-module-fallback": "*"
+    },
+    "license": "see LICENSE.md",
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "HyvaTheme\\Magento2MagepowCategories\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Lucas van Staden (ProxiBlue)",
+            "email": "sales@proxiblue.com.au"
+        }
+    ]
+}
