@@ -1,0 +1,53 @@
+<?php
+/*
+ * @category: Magepow
+ * @copyright: Copyright (c) 2014 Magepow (http://www.magepow.com/)
+ * @licence: http://www.magepow.com/license-agreement
+ * @author: MichaelHa
+ * @create date: 2019-11-29 17:19:50
+ * @LastEditors: MichaelHa
+ * @LastEditTime: 2019-12-04 11:07:49
+ */
+?>
+<?php
+/**
+ * Categories block
+ *
+ * @var $block \Magepow\Categories\Block\Categories
+ */
+
+$categories  = $block->getCategories();
+$heading     = $block->getHeading();
+$description = $block->isShowDescription();
+if (empty($categories)) return;
+$selector     = 'alo-content-'.uniqid(); 
+?>
+<?php $visible = (int) $this->getData('visible'); $visible++ ?>
+<style type="text/css"><?php echo '.' . $selector . ' .item:nth-child(n+' . $visible . '){display: none;} ' . '.' . $selector . ' .item{float:left}'  ?></style>
+<?php if ($heading): ?>
+    <h3 class="title"><?php echo $heading ?></h3>
+<?php endif; ?>
+<div class="magepow-categories <?php echo $selector ?>" data-mage-init='{"gridSlider": {}}'>
+    <ul class="grid-slider"
+        <?php foreach ($this->getFrontendCfg() as $opt) :?>
+            data-<?php echo $opt ?>='<?php echo $this->getData($opt) ?>'
+        <?php endforeach;?>
+    >
+        <?php foreach ($categories as $cat): ?>
+            <?php $image = $this->getImageInfo($cat); ?>
+            <li class="category-item">
+                <a class="category-url" href="<?php echo $cat->getUrl() ?>">
+                    <img src="<?php echo $this->getImage($cat) ?>" width="<?php echo $image->getOriginalWidth() ?>" height="<?php echo $image->getOriginalHeight() ?>" alt="<?php echo $cat->getName() ?>"/>
+                </a>
+                <a href="<?php echo $cat->getUrl() ?>">
+                    <span class="category-name"><?php echo $cat->getName() ?></span>
+                </a>
+                <?php if($description): ?>
+                    <div class="category-description">
+                        <?php echo $this->getDescription($cat) ?>
+                    </div>
+                <?php endif; ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</div>

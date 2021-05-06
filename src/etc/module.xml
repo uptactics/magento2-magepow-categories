@@ -1,5 +1,11 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <module name="HyvaTheme_Magento2MagepowCategories"/>
+    <module name="HyvaThemes_Magento2MagepowCategories">
+        <sequence>
+            <module name="Hyva_Theme" />
+            <module name="Magepow_Categories"/>
+            <module name="Hyva_CompatModuleFallback"/>
+        </sequence>
+    </module>
 </config>
