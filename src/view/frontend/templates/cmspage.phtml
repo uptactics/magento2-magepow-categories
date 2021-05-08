@@ -37,7 +37,7 @@ $description = $block->isShowDescription();
     <?php endif; ?>
     <div x-data="init()" :class="{ 'grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6': layout == 'grid' }">
         <?php foreach ($categories as $cat): ?>
-            <div class="bg-transparent border-gray-200-lighter border mr-2 mb-7" :class="{ 'flex mb-2': layout == 'list' }">
+            <div class="bg-transparent border-gray-200-lighter border mr-2 mb-2" :class="{ 'flex mb-2': layout == 'list' }">
                 <div :class="{ 'pr-2': layout == 'list' }">
                     <a href="<?php echo $cat->getUrl() ?>">
                         <div class="p-1 m-auto text-secondary text-center">
