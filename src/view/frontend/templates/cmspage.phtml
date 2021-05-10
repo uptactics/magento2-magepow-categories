@@ -1,20 +1,16 @@
 <?php
-/*
- * @category: Magepow
- * @copyright: Copyright (c) 2014 Magepow (http://www.magepow.com/)
- * @licence: http://www.magepow.com/license-agreement
- * @author: MichaelHa
- * @create date: 2019-11-29 17:19:50
- * @LastEditors: MichaelHa
- * @LastEditTime: 2019-12-04 11:07:12
- */
-?>
-<?php
-/**
- * Cmspage block
- *
- * @var $block \Magepow\Categories\Block\Cmspage
- */
+
+declare(strict_types=1);
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Magento\Framework\View\Element\Template;
+use HyvaThemes\Magento2MagepowCategories\ViewModel\Resize;
+
+/** @var Template $block */
+/** @var ViewModelRegistry $viewModels */
+/** @var Resize $resize */
+
+$resize = $viewModels->require(Resize::class);
 
 $categories = $block->getCategories();
 $layout = $block->getLayout();
@@ -41,7 +37,7 @@ $description = $block->isShowDescription();
                 <div :class="{ 'pr-2': layout == 'list' }">
                     <a href="<?php echo $cat->getUrl() ?>">
                         <div class="p-1 m-auto text-secondary text-center">
-                            <img class="m-auto" src="<?php echo $cat->getImageUrl() ?>" alt="<?php echo $cat->getName() ?>"/>
+                            <img width="222" height="222" class="m-auto" src="<?php echo $resize->resize($cat->getImage(),222); ?>" alt="<?php echo $cat->getName() ?>"/>
                         </div>
                         <div class="text-sm break-words m-auto text-secondary text-center font-bold uppercase ">
                             <?php echo $cat->getName() ?>
