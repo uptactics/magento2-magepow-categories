@@ -11,6 +11,7 @@ use Magento\Framework\Image\AdapterFactory;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 
 class Resize implements ArgumentInterface
 {
@@ -28,12 +29,15 @@ class Resize implements ArgumentInterface
 
     private $_logger;
 
+    private $_scopeConfig;
+
     public function __construct(
         Context $context,
         StoreManagerInterface $storeManager,
         AdapterFactory $imageFactory,
         Filesystem $filesystem,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        ScopeConfigInterface $scopeConfig
     )
     {
         $this->_storeManager = $storeManager;
@@ -41,17 +45,18 @@ class Resize implements ArgumentInterface
         $this->_filesystem = $filesystem;
         $this->_directory = $filesystem->getDirectoryWrite(DirectoryList::MEDIA);
         $this->_logger = $logger;
+        $this->_scopeConfig = $scopeConfig;
     }
 
     public function resize($srcImage, $w, $h = null)
     {
+        $store = $this->_storeManager->getStore();
+        $mediaBaseUrl = $store->getBaseUrl(
+            \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
+        );
         try {
             if (empty($h)) $h = $w;
             if (is_string($srcImage)) {
-                $store = $this->_storeManager->getStore();
-                $mediaBaseUrl = $store->getBaseUrl(
-                    \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
-                );
                 $mediaDir = $this->_filesystem->getDirectoryRead(DirectoryList::MEDIA);
                 $image = $mediaDir->getAbsolutePath('catalog/category/') . $srcImage;
                 if ($this->_directory->isFile($image)) {
@@ -77,7 +82,8 @@ class Resize implements ArgumentInterface
         } catch (\Exception $e) {
             $this->_logger->critical($e);
         }
-        return '';
+        $fallbackImage = $this->_scopeConfig->getValue('catalog/placeholder/image_placeholder');
+        return $mediaBaseUrl . "/catalog/product/placeholder/" . $fallbackImage;
 
     }
 }
