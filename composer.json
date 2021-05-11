@@ -1,6 +1,5 @@
 {
     "name": "hyva-themes/magento2-magepow-categories",
-    "version": "1.0.1",
     "description": "Hyvä Themes Compatibility module for magepow/categories https://github.com/magepow/magento-2-categories",
     "type": "magento2-module",
     "require": {
@@ -23,5 +22,5 @@
             "email": "sales@proxiblue.com.au"
         }
     ],
-    "version": "1.0.5"
+    "version": "1.0.6"
 }
