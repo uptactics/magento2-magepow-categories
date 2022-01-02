@@ -26,7 +26,7 @@ $description      = $block->isShowDescription();
 <?php if ($heading): ?>
     <h3 class="mx-0 my-4"><?php echo $heading ?></h3>
 <?php endif; ?>
-<ul class="w-full grid grid-flow-col auto-cols-max md:auto-cols-min">
+<ul class="category-grid w-full grid grid-flow-col auto-cols-max md:auto-cols-min">
     <?php foreach ($categories as $cat): ?>
         <li class="wrapper bg-primary">
             <a class="category" href="<?php echo $cat->getUrl() ?>">
