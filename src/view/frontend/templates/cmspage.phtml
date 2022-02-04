@@ -38,17 +38,20 @@ $description = $block->isShowDescription();
         <?php foreach ($categories as $cat): ?>
             <div class="bg-transparent border-gray-200-lighter border" :class="{ 'flex mb-2': layout == 'list' }">
                 <div :class="{ 'pr-2': layout == 'list' }">
-                    <a href="<?=$cat->getUrl() ?>">
+                    <a href="<?= $cat->getUrl() ?>">
                         <div class="p-1 m-auto text-secondary text-center">
                             <img loading="lazy" width="222" height="222" class="m-auto"
                                  src="<?= $resize->resize($cat->getImage(), 222); ?>"
                                  title="<?= $escaper->escapeHtml($cat->getName()) ?>"
                                  alt="<?= $escaper->escapeHtml($cat->getName()) ?>"/>
                         </div>
-                        <div class="text-sm break-words m-auto text-secondary text-center font-bold uppercase ">
-                            <?= $escaper->escapeHtml($cat->getName()) ?>
-                        </div>
                     </a>
+                    <div class="text-sm break-words m-auto text-secondary text-center font-bold uppercase ">
+                        <a href="<?= $cat->getUrl() ?>">
+                            <?= $escaper->escapeHtml($cat->getName()) ?>
+                        </a>
+                    </div>
+
                 </div>
                 <?php if ($description): ?>
                     <div class="m-auto w-full text-secondary text-left">

@@ -38,10 +38,13 @@ $description = $block->isShowDescription();
                     <img src="<?= $this->getImage($cat) ?>" title="<?= $escaper->escapeHtml($cat->getName()) ?>"
                          alt="<?= $escaper->escapeHtml($cat->getName()) ?>"/>
                 </div>
-                <div class="category-name">
-                    <?= $escaper->escapeHtml($cat->getName()) ?>
-                </div>
             </a>
+            <div class="category-name">
+                <a href="<?= $cat->getUrl() ?>">
+                    <?= $escaper->escapeHtml($cat->getName()) ?>
+                </a>
+            </div>
+
             <?php if ($description): ?>
                 <div class="category-description">
                     <?php echo $this->getDescription($cat) ?>
