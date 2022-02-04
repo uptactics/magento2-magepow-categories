@@ -5,10 +5,12 @@ declare(strict_types=1);
 use Hyva\Theme\Model\ViewModelRegistry;
 use Magento\Framework\View\Element\Template;
 use HyvaThemes\Magento2MagepowCategories\ViewModel\Resize;
+use Magento\Framework\Escaper;
 
 /** @var Template $block */
 /** @var ViewModelRegistry $viewModels */
 /** @var Resize $resize */
+/** @var Escaper $escaper */
 
 $resize = $viewModels->require(Resize::class);
 
@@ -29,24 +31,28 @@ $description = $block->isShowDescription();
 <div class="container">
     <?php if (empty($categories)) return ?>
     <?php if ($heading): ?>
-        <h3 class="mx-0 my-1"><?php echo $heading ?></h3>
+        <h3 class="mx-0 my-1"><?= $escaper->escapeHtml($heading) ?></h3>
     <?php endif; ?>
-    <div x-data="init()" :class="{'category-grid grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6': layout == 'grid' }">
+    <div x-data="init()"
+         :class="{'category-grid grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6': layout == 'grid' }">
         <?php foreach ($categories as $cat): ?>
             <div class="bg-transparent border-gray-200-lighter border" :class="{ 'flex mb-2': layout == 'list' }">
                 <div :class="{ 'pr-2': layout == 'list' }">
-                    <a href="<?php echo $cat->getUrl() ?>">
+                    <a href="<?=$cat->getUrl() ?>">
                         <div class="p-1 m-auto text-secondary text-center">
-                            <img loading="lazy" width="222" height="222" class="m-auto" src="<?php echo $resize->resize($cat->getImage(),222); ?>" alt="<?php echo $cat->getName() ?>"/>
+                            <img loading="lazy" width="222" height="222" class="m-auto"
+                                 src="<?= $resize->resize($cat->getImage(), 222); ?>"
+                                 title="<?= $escaper->escapeHtml($cat->getName()) ?>"
+                                 alt="<?= $escaper->escapeHtml($cat->getName()) ?>"/>
                         </div>
                         <div class="text-sm break-words m-auto text-secondary text-center font-bold uppercase ">
-                            <?php echo $cat->getName() ?>
+                            <?= $escaper->escapeHtml($cat->getName()) ?>
                         </div>
                     </a>
                 </div>
                 <?php if ($description): ?>
                     <div class="m-auto w-full text-secondary text-left">
-                        <?php echo $this->getDescription($cat) ?>
+                        <?= $escaper->escapeHtml($this->getDescription($cat)) ?>
                     </div>
                 <?php endif; ?>
             </div>
