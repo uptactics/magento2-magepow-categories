@@ -33,14 +33,14 @@ $description = $block->isShowDescription();
 <ul class="category-grid w-full grid grid-flow-col auto-cols-max md:auto-cols-min">
     <?php foreach ($categories as $cat): ?>
         <li class="wrapper bg-primary">
-            <a class="category" href="<?= $cat->getUrl() ?>">
+            <a aria-label="<?= $escaper->escapeHtml($cat->getName()) ?> Image Link" class="category" href="<?= $cat->getUrl() ?>">
                 <div class="category-image">
                     <img src="<?= $this->getImage($cat) ?>" title="<?= $escaper->escapeHtml($cat->getName()) ?>"
                          alt="<?= $escaper->escapeHtml($cat->getName()) ?>"/>
                 </div>
             </a>
             <div class="category-name">
-                <a href="<?= $cat->getUrl() ?>">
+                <a aria-label="<?= $escaper->escapeHtml($cat->getName()) ?>" href="<?= $cat->getUrl() ?>">
                     <?= $escaper->escapeHtml($cat->getName()) ?>
                 </a>
             </div>
