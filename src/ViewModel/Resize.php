@@ -50,12 +50,12 @@ class Resize implements ArgumentInterface
 
     public function resize($srcImage, $w, $h = null)
     {
-        if(!empty($srcImage)) {
-            $srcImage = basename($srcImage);
-            $store = $this->_storeManager->getStore();
-            $mediaBaseUrl = $store->getBaseUrl(
+        $store = $this->_storeManager->getStore();
+        $mediaBaseUrl = $store->getBaseUrl(
                 \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
-            );
+        );
+        if(!empty($srcImage)) {
+            $srcImage = basename($srcImage);       
             try {
                 if (empty($h)) $h = $w;
                 if (is_string($srcImage)) {
