@@ -50,38 +50,40 @@ class Resize implements ArgumentInterface
 
     public function resize($srcImage, $w, $h = null)
     {
-        $srcImage = basename($srcImage);
-        $store = $this->_storeManager->getStore();
-        $mediaBaseUrl = $store->getBaseUrl(
-            \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
-        );
-        try {
-            if (empty($h)) $h = $w;
-            if (is_string($srcImage)) {
-                $mediaDir = $this->_filesystem->getDirectoryRead(DirectoryList::MEDIA);
-                $image = $mediaDir->getAbsolutePath('catalog/category/') . $srcImage;
-                if ($this->_directory->isFile($image)) {
-                    $targetDir = $mediaDir->getAbsolutePath('catalog/category/cache/' . $w . 'x' . $h);
-                    if (!$this->_directory->isExist($targetDir)) {
-                        $this->_directory->create($targetDir);
-                    }
-                    $destination = $targetDir . '/' . $srcImage;
-                    $relativeDestination = $this->_directory->getRelativePath($destination);
-                    if ($this->_directory->isFile($this->_directory->getRelativePath($destination))) {
-                        return $mediaBaseUrl . $relativeDestination;
-                    }
-                    $resize = $this->_imageFactory->create();
-                    $resize->open($image);
-                    $resize->keepAspectRatio(true);
-                    $resize->resize($w, $h);
-                    $resize->save($destination);
-                    if ($this->_directory->isFile($this->_directory->getRelativePath($destination))) {
-                        return $mediaBaseUrl . $relativeDestination;
+        if(!empty($srcImage)) {
+            $srcImage = basename($srcImage);
+            $store = $this->_storeManager->getStore();
+            $mediaBaseUrl = $store->getBaseUrl(
+                \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
+            );
+            try {
+                if (empty($h)) $h = $w;
+                if (is_string($srcImage)) {
+                    $mediaDir = $this->_filesystem->getDirectoryRead(DirectoryList::MEDIA);
+                    $image = $mediaDir->getAbsolutePath('catalog/category/') . $srcImage;
+                    if ($this->_directory->isFile($image)) {
+                        $targetDir = $mediaDir->getAbsolutePath('catalog/category/cache/' . $w . 'x' . $h);
+                        if (!$this->_directory->isExist($targetDir)) {
+                            $this->_directory->create($targetDir);
+                        }
+                        $destination = $targetDir . '/' . $srcImage;
+                        $relativeDestination = $this->_directory->getRelativePath($destination);
+                        if ($this->_directory->isFile($this->_directory->getRelativePath($destination))) {
+                            return $mediaBaseUrl . $relativeDestination;
+                        }
+                        $resize = $this->_imageFactory->create();
+                        $resize->open($image);
+                        $resize->keepAspectRatio(true);
+                        $resize->resize($w, $h);
+                        $resize->save($destination);
+                        if ($this->_directory->isFile($this->_directory->getRelativePath($destination))) {
+                            return $mediaBaseUrl . $relativeDestination;
+                        }
                     }
                 }
+            } catch (\Exception $e) {
+                $this->_logger->critical($e);
             }
-        } catch (\Exception $e) {
-            $this->_logger->critical($e);
         }
         $fallbackImage = $this->_scopeConfig->getValue('catalog/placeholder/image_placeholder');
         return $mediaBaseUrl . "/catalog/product/placeholder/" . $fallbackImage;
